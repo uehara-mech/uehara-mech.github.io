@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import { theme } from './theme';
+import ContentsWindow from './contents';
 
 
 class Main extends Component {
@@ -15,7 +16,7 @@ class Main extends Component {
     render() {
         return (
             <MuiThemeProvider theme={theme}>
-                <div>main test</div>
+                <ContentsWindow />
             </MuiThemeProvider>
         )
     };

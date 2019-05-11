@@ -18,6 +18,8 @@
         "@material-ui/icons": "^3.0.1",
         "axios": "^0.18.0",
         "babelify": "^10.0.0",
+        "js-yaml": "^3.13.1",
+        "marked": "^0.6.2",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
         "style-loader": "^0.23.1",

@@ -1,0 +1,13 @@
+resume_title: "Kohei Uehara's Website"
+resume_name: "Kohei Uehara"
+about_me:
+  about_me_desc: "test test"
+education: 
+  - organization: "Information Science and Technology, The University of Tokyo"
+    timeline: "2018-Now"
+  - organization: "Mechano-Infomatics, The University of Tokyo"
+    timeline: "2014-2018"
+papers: 
+  - title: "test"
+    authors: "test, test"
+    conference: "test conf"
