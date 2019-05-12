@@ -42,6 +42,9 @@ export default {
             template: 'index.html',
             filename: 'index.html',
             inject: false,
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'index.css'
         })
     ]
 }
