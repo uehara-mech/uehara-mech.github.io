@@ -43,8 +43,5 @@ export default {
             filename: 'index.html',
             inject: false,
         }),
-        new MiniCssExtractPlugin({
-            filename: 'index.css'
-        })
     ]
 }
