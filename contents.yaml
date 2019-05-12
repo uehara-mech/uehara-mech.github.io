@@ -24,7 +24,7 @@ competitions:
     members: "Mikihiro Tanaka, Atsuhiro Noguchi, <me>Kohei Uehara<me>, Lisa Kawai, Yoshitaka Ushiku, Tatsuya Harada"
     link: "url"
 work_experience: 
-  - name: "Mercari, Inc. Machine Learning Engineer Internship"
-    year: "2018.8.1 - 2018.8.31"
   - name: "LINE Corp. Machine Learning Engineer, Part time job"
     year: "2019.2.27 - 2019.4.30"
+  - name: "Mercari, Inc. Machine Learning Engineer Internship"
+    year: "2018.8.1 - 2018.8.31"
