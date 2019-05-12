@@ -8,4 +8,6 @@ jobs:
         - gh_pages
     steps:
       - checkout # check out the code in the project directory
+      - run: npm install
+      - run: npm run build
       - run: echo "hello world" # run the `echo` command
