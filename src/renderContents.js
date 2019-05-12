@@ -90,6 +90,16 @@ class RenderContents extends Component {
         )
     }
 
+    showWorkExperience = (work, index) => {
+        return (
+            <li key={index}>
+                <Typography variant="body1">
+                    {work.year}&nbsp;:&nbsp;{work.name}
+                </Typography>
+            </li>
+        )
+    }
+
     showAuthors = (author, index) => {
         if (author === "Kohei Uehara") {
             return (
@@ -177,6 +187,11 @@ class RenderContents extends Component {
                     <Divider className={classes.main_divider} />
                     <ul>{contents.education.map(this.showEducation)}</ul>
                     
+                    <div className={classes.blank} />
+                    <Typography variant="h6">Work Experience</Typography>
+                    <Divider className={classes.main_divider} />
+                    <ul>{contents.work_experience.map(this.showWorkExperience)}</ul>
+
                     <div className={classes.blank} />
                     <Typography variant="h6">Research</Typography>
                     <Divider className={classes.main_divider}/>
