@@ -56,7 +56,7 @@ class ContentsWindow extends Component {
         }
         return (
             <div>
-                {all_contents ? <RenderContents contents={all_contents} /> : <div>error</div>}
+                {all_contents ? <RenderContents contents={all_contents} /> : <div></div>}
             </div>
         )
     }

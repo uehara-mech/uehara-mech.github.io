@@ -62,6 +62,13 @@ const styles = theme => ({
     },
     paperTitle: {
         fontWeight: "bold"
+    },
+    snsList: {
+        paddingTop: 3,
+        paddingBottom: 3,
+    },
+    noLine: {
+        textDecoration: "none"
     }
 });
 
@@ -83,9 +90,9 @@ class RenderContents extends Component {
         let split_authors = paper_data.authors.split('<me>');
         return (
             <li key={index}>
-                <Typography variant="body1"> {split_authors.map(this.showAuthors)}&nbsp;
-                <span className={this.props.classes.paperTitle}>{paper_data.title}</span> 
-                    &nbsp;{paper_data.conference}&nbsp;{paper_data.year}&nbsp;[{paper_data.link}]</Typography>
+                <Typography variant="body1"> {split_authors.map(this.showAuthors)}.&nbsp;
+                <span className={this.props.classes.paperTitle}>{paper_data.title}.</span> 
+                    &nbsp;{paper_data.conference},&nbsp;{paper_data.year}.&nbsp;<a href={paper_data.link} target="_blank">[link]</a></Typography>
             </li>
         )
     }
@@ -122,8 +129,8 @@ class RenderContents extends Component {
             <div key={index}>
                 <li>
                     <Typography variant="body1">
-                        <span className={this.props.classes.paperTitle}>{compe_data.name}</span>&nbsp;
-                        {split_members.map(this.showAuthors)}
+                        <span className={this.props.classes.paperTitle}>{compe_data.name}.</span>&nbsp;
+                        {split_members.map(this.showAuthors)}&nbsp;&nbsp;<a href={compe_data.link}>[link]</a>
                     </Typography>
                 </li>
             </div>
@@ -167,13 +174,21 @@ class RenderContents extends Component {
                             </Grid>
                         </Grid>
                         <Divider className={classes.divider}/>
-                        {['Twitter', 'Facebook', 'GitHub'].map((text, index) => (
-                            <div className={classes.list} key={index}>
-                                <Typography variant="body2">
-                                    {text}
-                                </Typography>
-                            </div>
-                        ))}
+                        <div className={classes.snsList}>
+                            <Typography variant="body2">
+                                <i className="fab fa-twitter-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://twitter.com/oldsea00731">Twitter</a>
+                            </Typography>
+                        </div>
+                        <div className={classes.snsList}>
+                            <Typography variant="body2">
+                                <i className="fab fa-facebook-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://www.facebook.com/profile.php?id=100028442884186">Facebook</a>
+                            </Typography>
+                        </div>
+                        <div className={classes.snsList}>
+                            <Typography variant="body2">
+                                <i className="fab fa-github-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://github.com/uehara-mech">GitHub</a>
+                            </Typography>
+                        </div>
                     </div>
                 </Drawer>
                 <main className={classes.content}>
