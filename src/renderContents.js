@@ -10,6 +10,8 @@ import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import Grid from '@material-ui/core/Grid';
 
+import * as date_now from './date.js';
+
 const drawerWidth = 150;
 
 const styles = theme => ({
@@ -69,6 +71,12 @@ const styles = theme => ({
     },
     noLine: {
         textDecoration: "none"
+    },
+    date: {
+        marginTop: "auto",
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10
     }
 });
 
@@ -189,6 +197,11 @@ class RenderContents extends Component {
                                 <i className="fab fa-github-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://github.com/uehara-mech" target="_blank">GitHub</a>
                             </Typography>
                         </div>
+                    </div>
+                    <div className={classes.date}>
+                        <Typography variant="caption">
+                            last update: {date_now.date_now}
+                        </Typography>
                     </div>
                 </Drawer>
                 <main className={classes.content}>

@@ -9,8 +9,10 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run: npm install
+      - run: 
+          name: get date
+          command: sh get_date.sh
       - run: npm run build
-      - run: echo "hello world" # run the `echo` command
       - run:
           name: remove files and dirs which exclude `dist`
           command: /bin/ls -A | grep -v -E '^(dist$|.git)' | xargs rm -rf
