@@ -130,7 +130,7 @@ class RenderContents extends Component {
                 <li>
                     <Typography variant="body1">
                         <span className={this.props.classes.paperTitle}>{compe_data.name}.</span>&nbsp;
-                        {split_members.map(this.showAuthors)}&nbsp;&nbsp;<a href={compe_data.link}>[link]</a>
+                        {split_members.map(this.showAuthors)}&nbsp;&nbsp;<a href={compe_data.link} target="_blank">[link]</a>
                     </Typography>
                 </li>
             </div>
@@ -176,17 +176,17 @@ class RenderContents extends Component {
                         <Divider className={classes.divider}/>
                         <div className={classes.snsList}>
                             <Typography variant="body2">
-                                <i className="fab fa-twitter-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://twitter.com/oldsea00731">Twitter</a>
+                                <i className="fab fa-twitter-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://twitter.com/oldsea00731" target="_blank">Twitter</a>
                             </Typography>
                         </div>
                         <div className={classes.snsList}>
                             <Typography variant="body2">
-                                <i className="fab fa-facebook-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://www.facebook.com/profile.php?id=100028442884186">Facebook</a>
+                                <i className="fab fa-facebook-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://www.facebook.com/profile.php?id=100028442884186" target="_blank">Facebook</a>
                             </Typography>
                         </div>
                         <div className={classes.snsList}>
                             <Typography variant="body2">
-                                <i className="fab fa-github-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://github.com/uehara-mech">GitHub</a>
+                                <i className="fab fa-github-square"></i>&nbsp;&nbsp;<a className={classes.noLine} href="https://github.com/uehara-mech" target="_blank">GitHub</a>
                             </Typography>
                         </div>
                     </div>
