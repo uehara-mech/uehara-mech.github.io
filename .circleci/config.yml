@@ -11,3 +11,18 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: echo "hello world" # run the `echo` command
+      - run:
+          name: remove files and dirs which exclude `dist`
+          command: /bin/ls -A | grep -v -E '^(dist$|.git)' | xargs rm -rf
+      - run:
+          name: move `dist` dir to current dir
+          command: mv ./dist/* ./
+      - run:
+          name: deploy to gh-pages
+          command: |
+            git config --global user.name  "uehara-mech"
+            git config --global user.email "starlight00731@gmail.com"
+            git add .
+            git commit -m "Publish [ci skip]"
+            git checkout -B master
+            git push -u origin master --force
