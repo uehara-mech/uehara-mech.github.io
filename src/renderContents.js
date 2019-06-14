@@ -132,12 +132,23 @@ class RenderContents extends Component {
     }
 
     showCompetitions = (compe_data, index) => {
-        let split_members = compe_data.members.split('<me>');
+        let split_authors = compe_data.members.split('<me>');
+        return (
+            <li key={index}>
+                <Typography variant="body1"> {split_authors.map(this.showAuthors)}.&nbsp;
+                <span className={this.props.classes.paperTitle}>{talk_data.title}.</span>
+                    &nbsp;{talk_data.conf},&nbsp;{talk_data.year}.</Typography>
+            </li>
+        )
+    }
+
+    showTalks = (talk_data, index) => {
+        let split_members = talk_data.members.split('<me>');
         return (
             <div key={index}>
                 <li>
                     <Typography variant="body1">
-                        <span className={this.props.classes.paperTitle}>{compe_data.name}.</span>&nbsp;
+                        <span className={this.props.classes.paperTitle}>{talk_data.title}.</span>&nbsp;
                         {split_members.map(this.showAuthors)}&nbsp;&nbsp;<a href={compe_data.link} target="_blank">[link]</a>
                     </Typography>
                 </li>
@@ -214,21 +225,26 @@ class RenderContents extends Component {
                     <Typography variant="h6">Education</Typography>
                     <Divider className={classes.main_divider} />
                     <ul>{contents.education.map(this.showEducation)}</ul>
-                    
-                    <div className={classes.blank} />
-                    <Typography variant="h6">Work Experience</Typography>
-                    <Divider className={classes.main_divider} />
-                    <ul>{contents.work_experience.map(this.showWorkExperience)}</ul>
 
                     <div className={classes.blank} />
-                    <Typography variant="h6">Research</Typography>
+                    <Typography variant="h6">Publications</Typography>
                     <Divider className={classes.main_divider}/>
                     <ul>{contents.papers.map(this.showPapers)}</ul>
+
+                    <div className={classes.blank} />
+                    <Typography variant="h6">Invited Talks</Typography>
+                    <Divider className={classes.main_divider} />
+                    <ul>{contents.invited_talks.map(this.showTalks)}</ul>
                     
                     <div className={classes.blank} />
                     <Typography variant="h6">Competitions</Typography>
                     <Divider className={classes.main_divider} />
                     <ul>{contents.competitions.map(this.showCompetitions)}</ul>
+
+                    <div className={classes.blank} />
+                    <Typography variant="h6">Work Experiences</Typography>
+                    <Divider className={classes.main_divider} />
+                    <ul>{contents.work_experience.map(this.showWorkExperience)}</ul>
                 </main>
             </div>
         )
