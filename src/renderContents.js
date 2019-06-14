@@ -152,7 +152,7 @@ class RenderContents extends Component {
                 <li>
                     <Typography variant="body1">
                         {split_members.map(this.showAuthors)}.&nbsp;
-                        <span className={this.props.classes.paperTitle}>{talk_data.title}.</span>
+                        <span className={this.props.classes.paperTitle}>{talk_data.title}.</span>&nbsp;
                         {talk_data.conf},&nbsp;{talk_data.year}.
                     </Typography>
                 </li>
