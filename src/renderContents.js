@@ -132,13 +132,16 @@ class RenderContents extends Component {
     }
 
     showCompetitions = (compe_data, index) => {
-        let split_authors = compe_data.members.split('<me>');
+        let split_members = compe_data.members.split('<me>');
         return (
-            <li key={index}>
-                <Typography variant="body1"> {split_authors.map(this.showAuthors)}.&nbsp;
-                <span className={this.props.classes.paperTitle}>{talk_data.title}.</span>
-                    &nbsp;{talk_data.conf},&nbsp;{talk_data.year}.</Typography>
-            </li>
+            <div key={index}>
+                <li>
+                    <Typography variant="body1">
+                        <span className={this.props.classes.paperTitle}>{compe_data.name}.</span>&nbsp;
+                        {split_members.map(this.showAuthors)}&nbsp;&nbsp;<a href={compe_data.link} target="_blank">[link]</a>
+                    </Typography>
+                </li>
+            </div>
         )
     }
 
@@ -148,8 +151,9 @@ class RenderContents extends Component {
             <div key={index}>
                 <li>
                     <Typography variant="body1">
-                        <span className={this.props.classes.paperTitle}>{talk_data.title}.</span>&nbsp;
-                        {split_members.map(this.showAuthors)}&nbsp;&nbsp;<a href={compe_data.link} target="_blank">[link]</a>
+                        {split_members.map(this.showAuthors)}.&nbsp;
+                        <span className={this.props.classes.paperTitle}>{talk_data.title}.</span>
+                        {talk_data.conf},&nbsp;{talk_data.year}.
                     </Typography>
                 </li>
             </div>
