@@ -1,12 +1,19 @@
-body{
-	margin: 0;
-	height: 100%;
+.page-title {
+	margin-top: 20px;
+	margin-bottom: 30px;
 }
 
-html {
-    height: 100%;
+.links {
+	margin-top: 10px;
+	display: inline-block;
+	text-decoration: none;
 }
 
-#main {
-	height: 100%;
+a.link-icon {
+  color: black;
+}
+
+.update {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
