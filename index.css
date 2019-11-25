@@ -1,0 +1,19 @@
+.page-title {
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.links {
+	margin-top: 10px;
+	display: inline-block;
+	text-decoration: none;
+}
+
+a.link-icon {
+  color: black;
+}
+
+.update {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
