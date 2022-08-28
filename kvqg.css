@@ -1,0 +1,13 @@
+.jumbotron {
+    margin: 0;
+    padding: 2rem !important;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+#data-example {
+    max-width: 670px;
+    margin: 0 auto;
+}

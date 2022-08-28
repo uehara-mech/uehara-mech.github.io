@@ -3,34 +3,153 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Kohei Uehara's website</title>
-    <base href="/" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Electrolize" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Kohei Uehara's website</title>
+<base href="/" />
 
-    <script src="https://kit.fontawesome.com/9141dacc99.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+<!-- and it's easy to individually load additional languages -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/json.min.js"></script>-->
+<script>hljs.highlightAll();</script>
+
+<!--    <script src='https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js'/>-->
+<!--    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'/>-->
+
+<link rel="stylesheet" href="kvqg.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script src="https://kit.fontawesome.com/9141dacc99.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <!-- <div id="msg">loading...</div> -->
-    <div>
-        test
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+<!-- <div id="msg">loading...</div> -->
+<div>
+<section>
+<div class="jumbotron text-center">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<h1>K-VQG: Knowledge-aware Visual Question Generation for Common-sense Acquisition</h1>
+<h4 style="color:#5a6268;"> WACV 2023 (Accepted) </h4>
+<hr>
+<h5> Kohei Uehara<sup>1</sup>, Tatsuya Harada<sup>1, 2</sup></h5>
+<p><sup>1</sup>The University of Tokyo, <sup>2</sup>RIKEN</p>
+<p>
+    <a class="btn btn-secondary btn-lg" href="https://arxiv.org/abs/2203.07890" role="button">Paper</a>
+    <!--                <a class="btn btn-secondary btn-lg" href="https://github.com/nogu-atsu/ENARF-GAN" role="button">Code</a>-->
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-12 text-center">
+<h2 style="margin-top: 20px">Abstract</h2>
+    <hr style="margin-top:0px">
+</div>
+
+<div class="col-7 text-center">
+<p class="text-left">
+Visual Question Generation (VQG) is a task to generate questions from images.
+When humans ask questions about an image, their goal is often to acquire some new knowledge.
+However, existing studies on VQG have mainly addressed question generation from answers or question categories, overlooking the objectives of knowledge acquisition.
+To introduce a knowledge acquisition perspective into VQG, we constructed a novel knowledge-aware VQG dataset called K-VQG.
+This is the first large, humanly annotated dataset in which questions regarding images are tied to structured knowledge.
+We also developed a new VQG model that can encode and use knowledge as the target for a question.
+The experiment results show that our model outperforms existing models on the K-VQG dataset.
+</p>
+</div>
+<div class="col-5 d-flex align-items-center justify-content-center">
+<img src="images/intro_web.jpg" alt="intro_web" class="img-fluid">
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-10 text-center align-self-center">
+<h2 style="margin-top: 50px">Dataset</h2>
+    <hr style="margin-top:0px">
+<p class="text-left">
+The K-VQG dataset ( <code>kvqg_dataset.zip</code> ) can be downloaded from the link below.<br>
+After unzipping the downloaded file, you will get two files: <code>kvqg_train.json</code> and <code>kvqg_val.json</code>.<br>
+The training data contains 12,891 questions and the validation data contains 3,207 questions.<br>
+Image files can be downloaded from the <a href="https://visualgenome.org/api/v0/api_home.html">Visual Genome website</a>.<br>
+Note that the image id and object id are consistent with Visual Genome.
+</p>
+<div>
+<!--<a class="btn btn-secondary btn-lg" href="https://arxiv.org/abs/2203.07890" role="button">-->
+<!--    <i class="fa-brands fa-google-drive"></i> Download-->
+<!--</a>-->
+    <a class="btn btn-primary" href="assets/kvqg_dataset.zip" download="kvqg_dataset.zip" role="button">Download</a>
+</div>
+<br>
+<p class="text-left" style="margin: 0">
+Here is an example of the data contained in the dataset.
+</p>
+<pre class="text-left">
+<code class="json" id="data-example">
+</code>
+</pre>
+
+</div>
+</div>
+</div>
+</section>
+<footer class="text-center">
+<div class="container">
+<div class="row ">
+<div class="col-12">
+<h2>Citation</h2>
+<hr style="margin-top:0px">
+<pre class="text-left">
+<code>@article{uehara2022kvqg,
+    title={K-VQG: Knowledge-aware Visual Question Generation for Common-sense Acquisition},
+    author={Uehara, Kohei and Harada, Tatsuya},
+    journal={arXiv preprint arXiv:2203.07890},
+    year={2022}
+}</code>
+</pre>
+<hr>
+</div>
+</div>
+</div>
+</footer>
+    <center>
+    <p>
+      We adapted the template for this website from <a href="https://lioryariv.github.io/idr/">IDR</a>.
+    </p>
+  </center>
+</div>
+
+
+<script>
+
+const jsonData = {'target_object': 'container',
+'question': 'what is the back of the truck shown used for?',
+'knowledge': 'container, UsedFor, store all the collection',
+'answer': 'store all the collection',
+'image_id': 713614,
+'question_id': 0,
+'query_knowledge': ['container', 'UsedFor', '[MASK]'],
+'img_fname': '713614.jpg',
+'object_id': 1586409,
+'x1': 103,
+'y1': 421,
+'x2': 572,
+'y2': 703
+};
+document.getElementById("data-example").textContent = JSON.stringify(jsonData, null, 2);
+
+</script>
+
 </body>
 
 </html>
