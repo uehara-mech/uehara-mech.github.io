@@ -3,8 +3,9 @@
     padding: 2rem !important;
 }
 
-pre {
+pre, code {
     white-space: pre-wrap;
+    font-weight: normal;
 }
 
 #data-example {
