@@ -11,3 +11,12 @@ pre {
     max-width: 670px;
     margin: 0 auto;
 }
+
+.heading-link, .heading-link:hover, .heading-link:focus, .heading-link:active {
+    color: inherit; /* Keeps the color the same as the regular text */
+    text-decoration: underline; /* Adds an underline to the link */
+}
+
+.icon-small {
+    font-size: 0.6em; /* Adjust the size of the icon */
+}
