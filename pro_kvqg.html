@@ -1,0 +1,167 @@
+<!-- kvqg.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2BTE47V7K9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2BTE47V7K9');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>K-VQG Project Page</title>
+<base href="/" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+<!-- and it's easy to individually load additional languages -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/json.min.js"></script>-->
+<script>hljs.highlightAll();</script>
+
+
+<link rel="stylesheet" href="kvqg.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script src="https://kit.fontawesome.com/9141dacc99.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div>
+<section>
+<div class="jumbotron text-center">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-10">
+<h1>Learning by Asking Questions for Knowledge-Based Novel Object Recognition</h1>
+<h4 style="color:#5a6268;"> International Journal of Computer Vision (IJCV) </h4>
+<hr>
+    <h5> <a href="https://uehara-mech.github.io/">Kohei Uehara</a><sup>1</sup>, <a href="https://www.mi.t.u-tokyo.ac.jp/harada/">Tatsuya Harada</a><sup>1, 2</sup></h5>
+<p><sup>1</sup>The University of Tokyo, <sup>2</sup>RIKEN</p>
+<p>
+    <a class="btn btn-info" href="https://link.springer.com/article/10.1007/s11263-023-01976-7" role="button" style="width: 110px">
+        <i class="fa-solid fa-file-lines" style="margin-right: 5px"></i> Paper
+    </a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-10 text-center">
+<h2 style="margin-top: 20px">Abstract</h2>
+    <hr style="margin-top:0px">
+</div>
+
+<div class="col-7 text-center align-self-center">
+<p class="text-left">
+In real-world object recognition, there are numerous object classes to be recognized.
+Traditional image recognition methods based on supervised learning can only recognize object classes present in the training data, and have limited applicability in the real world.
+In contrast, humans can recognize novel objects by questioning and acquiring knowledge about them.
+Inspired by this, we propose a framework for acquiring external knowledge by generating questions that enable the model to instantly recognize novel objects.
+Our framework comprises three components: the object classifier (OC), which performs knowledge-based object recognition, the question generator (QG), which generates knowledge-aware questions to acquire novel knowledge, and the policy decision (PD) Model, which determines the “policy” of questions to be asked.
+The PD model utilizes two strategies, namely “confirmation” and “exploration”—the former confirms candidate knowledge while the latter explores completely new knowledge.
+Our experiments demonstrate that the proposed pipeline effectively acquires knowledge about novel objects compared to several baselines, and realizes novel object recognition utilizing the obtained knowledge.
+We also performed a real-world evaluation in which humans responded to the generated questions, and the model used the acquired knowledge to retrain the OC, which is a fundamental step toward a real-world human-in-the-loop learning-by-asking framework.
+</p>
+</div>
+<div class="col-5 d-flex align-items-center justify-content-center">
+<img src="images/intro_pkvqg.png" alt="intro_web" class="img-fluid">
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-10 text-center align-self-center">
+<h2 style="margin-top: 50px">Dataset</h2>
+    <hr style="margin-top:0px">
+<p class="text-left">
+The K-VQG v2 dataset ( <code>kvqg_dataset_v2.zip</code> ) can be downloaded from the link below.<br>
+After unzipping the downloaded file, you will get two files: <code>kvqgv2_train.json</code> and <code>kvqgv2_val.json</code>.<br>
+The training data contains 16,110 questions and the validation data contains 6,102 questions.<br>
+Image files can be downloaded from the <a href="https://visualgenome.org/api/v0/api_home.html">Visual Genome website</a>.<br>
+Note that the image id and object id are consistent with Visual Genome.
+</p>
+<div>
+    <a class="btn btn-primary" href="assets/kvqgv2_dataset.zip"
+       download="kvqgv2_dataset.zip" role="button"
+       onclick="gtag('event','kvqgv2_download_button_click',{'click_category':'dataset'});"
+    >
+        <i class="fa-solid fa-file-arrow-down" style="margin-right: 10px"></i> Download
+    </a>
+</div>
+<br>
+<p class="text-left" style="margin: 0">
+Here is an example of the data contained in the dataset.
+</p>
+<pre class="text-left">
+<code class="json" id="data-example">
+</code>
+</pre>
+
+</div>
+</div>
+</div>
+</section>
+<footer class="text-center">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-10">
+<h2>Citation</h2>
+<hr style="margin-top:0px">
+<pre class="text-left">
+<code>@article{uehara2024learning,
+  title={Learning by Asking Questions for Knowledge-Based Novel Object Recognition},
+  author={Kohei Uehara and Tatsuya Harada},
+  journal={International Journal of Computer Vision},
+  year={2024},
+  month={Jan}
+}
+</code>
+</pre>
+<hr>
+</div>
+</div>
+</div>
+</footer>
+    <center>
+    <p>
+      We adapted the template for this website from <a href="https://lioryariv.github.io/idr/">IDR</a>.
+    </p>
+  </center>
+</div>
+
+
+<script>
+
+const jsonData = {'question': 'what is the brown object on top of the dessert?',
+ 'answer': 'cookie',
+ 'knowledge': 'cookie, AtLocation, dessert',
+ 'query_knowledge': ['[MASK]', 'AtLocation', 'dessert'],
+ 'type': 'v1',
+ 'object_id': 3316096,
+ 'x1': 228,
+ 'y1': 193,
+ 'x2': 373,
+ 'y2': 327,
+ 'image_id': 2360091,
+ 'question_id': 9210,
+ 'target_object': 'cookie'
+};
+document.getElementById("data-example").textContent = JSON.stringify(jsonData, null, 2);
+
+</script>
+
+</body>
+
+</html>
