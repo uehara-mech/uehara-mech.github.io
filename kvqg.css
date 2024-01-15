@@ -3,10 +3,15 @@
     padding: 2rem !important;
 }
 
-pre, code {
+pre {
     white-space: pre-wrap;
+}
+
+/* Override the hljs-keyword style in the Citation section */
+.hljs-keyword {
     font-weight: normal;
 }
+
 
 #data-example {
     max-width: 670px;
