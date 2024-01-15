@@ -26,3 +26,7 @@ pre {
 .icon-small {
     font-size: 0.6em; /* Adjust the size of the icon */
 }
+
+html {
+    scroll-behavior: smooth;
+}
