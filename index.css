@@ -17,3 +17,7 @@ a.link-icon {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
+.widelist li {
+	margin-bottom: 5px;
+}
