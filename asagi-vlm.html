@@ -74,40 +74,34 @@
 <section>
     <h2 class="text-2xl font-semibold">概要</h2>
     <p class="mt-4 text-gray-700">
-        Asagiは、142億パラメータを持つ、日本語に特化したオープンなVision&Languageモデル（VLM）を開発しました。
+        Asagiは、最大で14Bのパラメータを持つ、日本語に特化したオープンなVision&Languageモデル（VLM）です。
         <br>
-        VLMは、画像とテキストのペアを入力として受け取り、画像の内容に関連するテキストを生成するモデルです。
-        <br>
-        近年では，OpenAIのChatGPTや，GoogleのGeminiなど，商用サービスにおいて，高い画像理解・テキスト生成能力を持つVLMが続々と登場しています．
-        一方で，これらのモデルは，APIやチャットサービスとして提供されており，モデルパラメータや学習の詳細は公開されていません．
-        <br>
-        学術コミュニティでは，よりオープンな形で研究が進められていますが，大半は英語圏のデータに特化して学習された英語用モデルであり，日本語を主対象としたVLMは限られているのが現状です．
     </p>
     <p class="mt-4 text-gray-700">
-        日本語VLMを開発するにあたっての最大の課題は，モデルを学習するための大規模な日本語の画像・テキストペアデータセットが不足しているということでした．
+        日本語VLMを開発するにあたっての最大の課題は、モデルを学習するための大規模な日本語の画像・テキストペアデータセットが不足しているということでした。
         <br>
-        そこで，本研究では，Webからクロールした画像データなどを活用し，英語のVLMや日本語言語モデルを用いて，日本語のデータセットを新規に合成してモデルの学習に利用しました．
+        そこで、本研究では、Webからクロールした画像データなどを活用し、英語のVLMや日本語言語モデルを用いて、日本語のデータセットを新規に合成してモデルの学習に利用しました。
         <br>
-        合成データを活用したVLMの学習は，本研究以前にも行われています．
-        本研究のデータ合成戦略の特色は，出力物の利用に制限のあるLLM（GPT-4oなど）を合成プロセスにおいて使用していないという点です．
+        合成データを活用したVLMの学習は、本研究以前にも行われています。
+        本研究のデータ合成戦略の特色は、出力物の利用に制限のあるLLM（GPT-4oなど）を合成プロセスにおいて使用していないという点です。
         <br>
-        結果として，今回構築したAsagiモデルは，高い性能を達成しつつ，従来よりオープンな形で提供することが可能となりました．
+        結果として、今回構築したAsagiモデルは、高い性能を達成しつつ、従来よりオープンな形で提供することが可能となりました。
     </p>
     <p class="mt-4 text-gray-700">
-    なお，本研究については，3月に開催される<a href="https://www.anlp.jp/nlp2025/" class="text-blue-600">言語処理学会第31回年次大会</a>（NLP2025）にて発表を予定しています（3月11日（火） 13:00-14:30 Q3セッション）．
+    なお、本研究については、3月に開催される<a href="https://www.anlp.jp/nlp2025/" class="text-blue-600">言語処理学会第31回年次大会</a>（NLP2025）にて発表を予定しています（3月11日（火） 13:00-14:30 Q3セッション）。
     </p>
 </section>
 <section>
     <h2 class="text-2xl font-semibold mt-12">モデル</h2>
     <p class="mt-4 text-gray-700">
-        今回リリースするモデルは，LLaVA<sup><a href="#ref1" id="cite1">[1]</a></sup>をベースとしたモデル構成となっています．
-        LLaVAは，画像エンコーダーとLLM，両者を接続する2層の線形層から構成されるモデルです．
+        今回リリースするモデルは、LLaVA<sup><a href="#ref1" id="cite1">[1]</a></sup>をベースとしたモデル構成となっています。
+        LLaVAは、画像エンコーダーとLLM、両者を接続する2層の線形層から構成されるモデルです。
         <br>
-        画像エンコーダーには，Googleが提供するSigLIPモデル<sup><a href="#ref2" id="cite2">[2]</a></sup>を用いています．
-        LLMは，LLM-jpによってリリースされた日本語LLM<sup><a href="#ref3" id="cite3">[3]</a></sup>を使用しています．
+        画像エンコーダーには、Googleが提供するSigLIPモデル<sup><a href="#ref2" id="cite2">[2]</a></sup>を用いています。
+        LLMは、LLM-jpによってリリースされた日本語LLM<sup><a href="#ref3" id="cite3">[3]</a></sup>を使用しています。
 
         <br>
-        LLMのパラメータサイズによって，Asagiモデルにはいくつかのバリエーションがあります．
+        LLMのパラメータサイズによって、Asagiモデルにはいくつかのバリエーションがあります。
 
     <div class="w-full flex justify-center mx-auto">
         <table class="table mt-12">
@@ -154,16 +148,16 @@
 <section>
     <h2 class="text-2xl font-semibold mt-12">モデルの学習について</h2>
     <p class="mt-4 text-gray-700">
-        Asagiモデルの学習には，Webから完全新規でクロールした日本語Webサイトの画像データを活用しました．
+        Asagiモデルの学習には、Webから完全新規でクロールした日本語Webサイトの画像データを活用しました。
         <br>
-        データセットを構築する際には，画像の内容に基づく高品質なテキストデータを得るため，英語VLM（<a href="https://huggingface.co/microsoft/Phi-3.5-vision-instruct" class="text-blue-600">Phi-3.5-vision-instruct</a>）や日本語LLM（<a href="https://huggingface.co/cyberagent/calm3-22b-chat" class="text-blue-600">CALM3-22B-Chat</a>）を用いたデータ合成を行っています．
+        データセットを構築する際には、画像の内容に基づく高品質なテキストデータを得るため、英語VLM（<a href="https://huggingface.co/microsoft/Phi-3.5-vision-instruct" class="text-blue-600">Phi-3.5-vision-instruct</a>）や日本語LLM（<a href="https://huggingface.co/cyberagent/calm3-22b-chat" class="text-blue-600">CALM3-22B-Chat</a>）を用いたデータ合成を行っています。
         <br>
-        新規に合成したデータと，既存の日本語データセット，日本語に翻訳した英語データセットを合わせて，約2000万件のデータで学習を行いました．
-        データセットの詳細については，<a href="assets/nlp2025-asagi-vlm.pdf" class="text-blue-600">論文</a>をご参照ください．
+        新規に合成したデータと、既存の日本語データセット、日本語に翻訳した英語データセットを合わせて、約2000万件のデータで学習を行いました。
+        データセットの詳細については、<a href="assets/nlp2025-asagi-vlm.pdf" class="text-blue-600">論文</a>をご参照ください。
         <br>
-        モデルの訓練には，H100 GPUが8枚搭載された計算ノードを最大24ノード用いました．
-        <a href="https://github.com/NVIDIA/Megatron-LM" class="text-blue-600">Megatron-LM</a>を大規模VLMの学習に向けて拡張し，大規模モデルの効率的な学習を実現しています．
-        実装は，<a href="https://github.com/mil-tokyo/Megatron-VLM" class="text-blue-600">GitHub</a>で公開しています．
+        モデルの訓練には、H100 GPUが8枚搭載された計算ノードを最大24ノード用いました。
+        <a href="https://github.com/NVIDIA/Megatron-LM" class="text-blue-600">Megatron-LM</a>を大規模VLMの学習に向けて拡張し、大規模モデルの効率的な学習を実現しています。
+        実装は、<a href="https://github.com/mil-tokyo/Megatron-VLM" class="text-blue-600">GitHub</a>で公開しています。
     </p>
 </section>
 
@@ -328,11 +322,11 @@
 <section>
     <h2 class="text-2xl font-semibold mt-20">ベンチマーク結果</h2>
     <p class="mt-4 text-gray-700">
-        Asagiモデルの性能を他の日本語VLMと比較した結果を示します．評価スコアの計算には，<a href="https://github.com/llm-jp/llm-jp-eval-mm" class="text-blue-600">llm-jp-eval-mm</a>ライブラリを使用しました．
+        Asagiモデルの性能を他の日本語VLMと比較した結果を示します。評価スコアの計算には、<a href="https://github.com/llm-jp/llm-jp-eval-mm" class="text-blue-600">llm-jp-eval-mm</a>ライブラリを使用しました。
         <br>
-        なお，†印のモデルは，GPT-4によって生成されたデータを学習に用いていないモデルです．
+        なお、†印のモデルは、GPT-4によって生成されたデータを学習に用いていないモデルです。
         <br>
-        <strong>太字</strong>は，そのベンチマークで最高のスコアであることを示しており，<u>下線</u>は，GPTによって生成されたデータを学習に用いていないモデルの中で最高のスコアであることを示しています．
+        <strong>太字</strong>は、そのベンチマークで最高のスコアであることを示しており、<u>下線</u>は、GPTによって生成されたデータを学習に用いていないモデルの中で最高のスコアであることを示しています。
     </p>
     <div class="w-full flex justify-center mt-10">
         <table class="table">
@@ -454,13 +448,13 @@
 <section>
     <h2 class="text-2xl font-semibold mt-12">終わりに</h2>
     <p class="mt-4 text-gray-700">
-        本研究では，合成データセットを活用して，日本語VLMの構築を行いました．
+        本研究では、合成データセットを活用して、日本語VLMの構築を行いました。
         <br>
-        日本語VLMとしては，過去最大級のデータセットを用いて学習を行っているため，多様な指示や質問に対応可能なモデルに仕上がっています．
+        日本語VLMとしては、過去最大級のデータセットを用いて学習を行っているため、多様な指示や質問に対応可能なモデルに仕上がっています。
         <br>
-        また，ユーザーの使いやすさを考慮し，2Bから14Bまでのパラメータサイズのモデルを提供しています．
+        また、ユーザーの使いやすさを考慮し、2Bから14Bまでのパラメータサイズのモデルを提供しています。
         <br>
-        ぜひ，モデルをダウンロードして，Asagiモデルの性能を体験してみてください！
+        ぜひ、モデルをダウンロードして、Asagiモデルの性能を体験してみてください！
 
     </p>
 </section>
