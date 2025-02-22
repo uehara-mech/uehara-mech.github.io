@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision & Language Model</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9141dacc99.js" crossorigin="anonymous"></script>
+    <style>
+        html {
+            background-color: #f2f2f2 !important;
+        }
+        .table th {
+            background-color: #4A90E2 !important;
+            color: white;
+            border-bottom-width: 0 !important;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .table td {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .table-yellow-row td {
+            background-color: #fff4c1 !important;
+        }
+        .custom-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 20px;
+            font-size: 1rem;
+            border-radius: 50px;
+            background-color: black;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .custom-btn:hover {
+            background-color: #333;
+        }
+        .chat-image {
+            max-height: 200px;
+            margin-top: 12px;
+            margin-left: 4px;
+        }
+        .chat-bubble {
+            background-color: #fff6ce;
+            color: #000;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="container mx-auto pt-12 pb-12 pl-32 pr-32 space-y-8 bg-base-200 leading-relaxed" data-theme="light">
+
+<!-- Hero Section -->
+<section class="text-center py-12">
+    <h1 class="text-4xl font-bold">Asagi: 合成データセットを活用した大規模日本語VLM</h1>
+    <div class="flex flex-wrap justify-center gap-3 pt-8">
+        <a href="https://github.com/mil-tokyo/Megatron-VLM" class="custom-btn">
+            <i class="fab fa-github fa-lg mr-2"></i> Code
+        </a>
+        <a href="assets/nlp2025-asagi-vlm.pdf" class="custom-btn">
+            <i class="fas fa-file-lines fa-lg mr-2"></i> Paper (PDF)
+        </a>
+        <a href="https://huggingface.co/collections/MIL-UT/asagi-vlm-67b973a2b1fbda376b0ccf5d" class="custom-btn"><img src="assets/hf-logo.svg" alt="HF Icon" class="w-6 h-6 mr-2">Models</a>
+    </div>
+</section>
+
+<!-- Model Description -->
+<section>
+    <h2 class="text-2xl font-semibold">概要</h2>
+    <p class="mt-4 text-gray-700">
+        Asagiは、142億パラメータを持つ、日本語に特化したオープンなVision&Languageモデル（VLM）を開発しました。
+        <br>
+        VLMは、画像とテキストのペアを入力として受け取り、画像の内容に関連するテキストを生成するモデルです。
+        <br>
+        近年では，OpenAIのChatGPTや，GoogleのGeminiなど，商用サービスにおいて，高い画像理解・テキスト生成能力を持つVLMが続々と登場しています．
+        一方で，これらのモデルは，APIやチャットサービスとして提供されており，モデルパラメータや学習の詳細は公開されていません．
+        <br>
+        学術コミュニティでは，よりオープンな形で研究が進められていますが，大半は英語圏のデータに特化して学習された英語用モデルであり，日本語を主対象としたVLMは限られているのが現状です．
+    </p>
+    <p class="mt-4 text-gray-700">
+        日本語VLMを開発するにあたっての最大の課題は，モデルを学習するための大規模な日本語の画像・テキストペアデータセットが不足しているということでした．
+        <br>
+        そこで，本研究では，Webからクロールした画像データなどを活用し，英語のVLMや日本語言語モデルを用いて，日本語のデータセットを新規に合成してモデルの学習に利用しました．
+        <br>
+        合成データを活用したVLMの学習は，本研究以前にも行われています．
+        本研究のデータ合成戦略の特色は，出力物の利用に制限のあるLLM（GPT-4oなど）を合成プロセスにおいて使用していないという点です．
+        <br>
+        結果として，今回構築したAsagiモデルは，高い性能を達成しつつ，従来よりオープンな形で提供することが可能となりました．
+    </p>
+    <p class="mt-4 text-gray-700">
+    なお，本研究については，3月に開催される<a href="https://www.anlp.jp/nlp2025/" class="text-blue-600">言語処理学会第31回年次大会</a>（NLP2025）にて発表を予定しています（3月11日（火） 13:00-14:30 Q3セッション）．
+    </p>
+</section>
+<section>
+    <h2 class="text-2xl font-semibold mt-12">モデル</h2>
+    <p class="mt-4 text-gray-700">
+        今回リリースするモデルは，LLaVA<sup><a href="#ref1" id="cite1">[1]</a></sup>をベースとしたモデル構成となっています．
+        LLaVAは，画像エンコーダーとLLM，両者を接続する2層の線形層から構成されるモデルです．
+        <br>
+        画像エンコーダーには，Googleが提供するSigLIPモデル<sup><a href="#ref2" id="cite2">[2]</a></sup>を用いています．
+        LLMは，LLM-jpによってリリースされた日本語LLM<sup><a href="#ref3" id="cite3">[3]</a></sup>を使用しています．
+
+        <br>
+        LLMのパラメータサイズによって，Asagiモデルにはいくつかのバリエーションがあります．
+
+    <div class="w-full flex justify-center mx-auto">
+        <table class="table mt-12">
+            <thead>
+            <tr>
+                <th>モデル名</th>
+                <th>総パラメータ数</th>
+                <th>画像エンコーダー</th>
+                <th>LLM</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Asagi-2b</td>
+                <td>2.3B</td>
+                <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384">siglip-so400m-patch14-384</a></td>
+                <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-1.8b-instruct">llm-jp-3-1.8b-instruct</a></td>
+            </tr>
+            <tr>
+                <td>Asagi-4B</td>
+                <td>4.2B</td>
+                <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384">siglip-so400m-patch14-384</a></td>
+                <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-3.7b-instruct" >llm-jp-3-3.7b-instruct</a></td>
+            </tr>
+            <tr>
+                <td>Asagi-8B</td>
+                <td>7.8B</td>
+                <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384">siglip-so400m-patch14-384</a></td>
+                <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-7.2b-instruct">llm-jp-3-7.2b-instruct</a></td>
+            </tr>
+            <tr>
+                <td>Asagi-14B</td>
+                <td>14.2B</td>
+                <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384">siglip-so400m-patch14-384</a></td>
+                <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-13b-instruct">llm-jp-3-13b-instruct</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </p>
+</section>
+
+<!-- Model training -->
+<section>
+    <h2 class="text-2xl font-semibold mt-12">モデルの学習について</h2>
+    <p class="mt-4 text-gray-700">
+        Asagiモデルの学習には，Webから完全新規でクロールした日本語Webサイトの画像データを活用しました．
+        <br>
+        データセットを構築する際には，画像の内容に基づく高品質なテキストデータを得るため，英語VLM（<a href="https://huggingface.co/microsoft/Phi-3.5-vision-instruct" class="text-blue-600">Phi-3.5-vision-instruct</a>）や日本語LLM（<a href="https://huggingface.co/cyberagent/calm3-22b-chat" class="text-blue-600">CALM3-22B-Chat</a>）を用いたデータ合成を行っています．
+        <br>
+        新規に合成したデータと，既存の日本語データセット，日本語に翻訳した英語データセットを合わせて，約2000万件のデータで学習を行いました．
+        データセットの詳細については，<a href="assets/nlp2025-asagi-vlm.pdf" class="text-blue-600">論文</a>をご参照ください．
+        <br>
+        モデルの訓練には，H100 GPUが8枚搭載された計算ノードを最大24ノード用いました．
+        <a href="https://github.com/NVIDIA/Megatron-LM" class="text-blue-600">Megatron-LM</a>を大規模VLMの学習に向けて拡張し，大規模モデルの効率的な学習を実現しています．
+        実装は，<a href="https://github.com/mil-tokyo/Megatron-VLM" class="text-blue-600">GitHub</a>で公開しています．
+    </p>
+</section>
+
+<!-- Chat Preview with Carousel -->
+<section>
+    <h2 class="text-2xl font-semibold mb-8 mt-12">モデルの出力例（Asagi-14B）</h2>
+    <div class="carousel carousel-center rounded-box max-w-3xl mx-auto space-x-20 pt-8 pb-8 pr-20 pl-20 bg-gray-200">
+        <div class="carousel-item max-w-lg h-auto">
+            <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white h-auto">
+                <div class="chat chat-start">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-user fa-2x"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        <img src="https://raw.githubusercontent.com/uehara-mech/uehara-mech.github.io/refs/heads/master/images/shibuya.jpg" alt="渋谷スクランブル交差点" class="rounded-lg chat-image">
+                        <br />
+                        この画像を見て、次の質問に詳細かつ具体的に答えてください。この写真はどこで撮影されたものか教えてください。また、画像の内容についても詳しく説明してください。
+                    </div>
+                </div>
+                <div class="chat chat-end">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-dot fa-2x"></i>
+                    </div>
+                    <div class="chat-header">
+                        Asagi-14B
+                    </div>
+                    <div class="chat-bubble">
+                        この写真は渋谷スクランブル交差点の夜景を撮影したものです。渋谷スクランブル交差点は、東京都渋谷区に位置する有名な交差点で、多くの人々が行き交う場所として知られています。写真には、高層ビル群やネオンサイン、街灯などが写っており、都会の活気とエネルギーを感じることができます。
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item max-w-lg">
+            <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
+                <div class="chat chat-start">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-user fa-2x"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        <img src="https://raw.githubusercontent.com/uehara-mech/uehara-mech.github.io/refs/heads/master/images/bridge.jpg" alt="Example" class="rounded-lg chat-image">
+                        <br />
+                        この画像を見て、次の指示に詳細かつ具体的に答えてください。この写真の内容について詳しく教えてください。
+                    </div>
+                </div>
+                <div class="chat chat-end">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-dot fa-2x"></i>
+                    </div>
+                    <div class="chat-header">
+                        Asagi-14B
+                    </div>
+                    <div class="chat-bubble">
+                        この写真は、東京のレインボーブリッジを背景にした都市景観を撮影したものです。橋は白と灰色の塗装が施されており、水の上に優雅にアーチを描いています。空は澄み切った青色で、少数の雲が浮かんでいます。遠くには高層ビルが立ち並ぶ都市の風景が見えます。
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item max-w-lg">
+            <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
+                <div class="chat chat-start">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-user fa-2x"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        <img src="https://raw.githubusercontent.com/uehara-mech/uehara-mech.github.io/refs/heads/master/images/tower.jpg" alt="Example" class="rounded-lg chat-image">
+                        <br />
+                        この画像を見て、次の質問に詳細かつ具体的に答えてください。この写真について評価してください。
+                    </div>
+                </div>
+                <div class="chat chat-end">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-dot fa-2x"></i>
+                    </div>
+                    <div class="chat-header">
+                        Asagi-14B
+                    </div>
+                    <div class="chat-bubble">
+                        この写真は非常に美しいです。東京タワーの赤と白のコントラストが鮮やかで、青空と白い雲との対比が印象的です。周囲の緑豊かな木々と街灯が都会的な雰囲気を醸し出しており、全体的にバランスの取れた構図となっています。
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item max-w-lg">
+            <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
+                <div class="chat chat-start">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-user fa-2x"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        <img src="https://raw.githubusercontent.com/uehara-mech/uehara-mech.github.io/refs/heads/master/images/shrine.jpg" alt="Example" class="rounded-lg chat-image">
+                        <br />
+                        この画像を見て、次の質問に詳細かつ具体的に答えてください。この写真の神社について、細かいところまで詳しく説明してください。
+                    </div>
+                </div>
+                <div class="chat chat-end">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-dot fa-2x"></i>
+                    </div>
+                    <div class="chat-header">
+                        Asagi-14B
+                    </div>
+                    <div class="chat-bubble">
+                        この写真に写っている神社は、日本の伝統的な建築様式を反映しています。白い壁とオレンジ色の柱が特徴的で、屋根は緑色の瓦で覆われています。神社の入り口には朱色の鳥居が立っており、これは神聖な場所への入り口を示す象徴的な門です。鳥居の両脇にはしめ縄が飾られており、神聖な雰囲気を醸し出しています。また、神社の前には石畳が敷かれており、これは参拝者が神聖な場所に足を踏み入れる際の敬意を表すためのものです。この神社は、現代の都市部にありながらも、日本の伝統的な文化や信仰を現代に伝える重要な役割を果たしています。
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item max-w-lg">
+            <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
+                <div class="chat chat-start">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-user fa-2x"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        <img src="https://raw.githubusercontent.com/uehara-mech/uehara-mech.github.io/refs/heads/master/images/garden.jpg" alt="Example" class="rounded-lg chat-image">
+                        <br />
+                        この画像を見て、次の指示に詳細かつ具体的に答えてください。これは日本庭園の中でも、どのような形式に分類される庭園ですか？また、その理由は何ですか？
+                    </div>
+                </div>
+                <div class="chat chat-end">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-dot fa-2x"></i>
+                    </div>
+                    <div class="chat-header">
+                        Asagi-14B
+                    </div>
+                    <div class="chat-bubble">
+                        これは日本庭園の中でも、池泉回遊式庭園と呼ばれる形式の庭園です。池泉回遊式庭園は、池を中心に配置し、その周りを回遊できるように設計された庭園です。この形式の庭園は、自然の美しさを最大限に引き出し、訪れる人々に静寂と安らぎを提供することを目的としています。
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item max-w-lg">
+            <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
+                <div class="chat chat-start">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-user fa-2x"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        <img src="https://raw.githubusercontent.com/uehara-mech/uehara-mech.github.io/refs/heads/master/images/slope.jpg" alt="Example" class="rounded-lg chat-image">
+                        <br />
+                        この画像を見て、次の質問に詳細に答えてください。この画像の場所を舞台とした小説のあらすじを書いてください。
+                    </div>
+                </div>
+                <div class="chat chat-end">
+                    <div class="chat-image avatar">
+                        <i class="fa-solid fa-circle-dot fa-2x"></i>
+                    </div>
+                    <div class="chat-header">
+                        Asagi-14B
+                    </div>
+                    <div class="chat-bubble">
+                        この画像の場所を舞台とした小説のタイトルは「階段の秘密」です。物語は、都会の喧騒から離れた静かな路地裏にある古い石造りの階段を舞台に展開します。主人公は、この階段を登りながら、過去と現在が交錯する不思議な体験をしていきます。階段の途中には、歴史を感じさせる苔むした石壁や、伝統的な木造建築の建物が立ち並んでいます。主人公は、階段を登るたびに、過去の出来事や人々の記憶に触れ、自分自身の過去と向き合います。そして、階段の頂上にたどり着くと、そこに隠された秘密が明かされるのです。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benchmark Table -->
+<section>
+    <h2 class="text-2xl font-semibold mt-20">ベンチマーク結果</h2>
+    <p class="mt-4 text-gray-700">
+        Asagiモデルの性能を他の日本語VLMと比較した結果を示します．評価スコアの計算には，<a href="https://github.com/llm-jp/llm-jp-eval-mm" class="text-blue-600">llm-jp-eval-mm</a>ライブラリを使用しました．
+        <br>
+        なお，†印のモデルは，GPT-4によって生成されたデータを学習に用いていないモデルです．
+        <br>
+        <strong>太字</strong>は，そのベンチマークで最高のスコアであることを示しており，<u>下線</u>は，GPTによって生成されたデータを学習に用いていないモデルの中で最高のスコアであることを示しています．
+    </p>
+    <div class="w-full flex justify-center mt-10">
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Heron-Bench</th>
+                <th colspan="2">JA-VLM-Bench-In-the-Wild</th>
+                <th colspan="2">JA-VG-VQA-500</th>
+            </tr>
+            <tr>
+                <th>Model</th>
+                <th>LM Size</th>
+                <th>LLM (%)</th>
+                <th>ROUGE-L</th>
+                <th>LLM (/5.0)</th>
+                <th>ROUGE-L</th>
+                <th>LLM (/5.0)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><a href="https://huggingface.co/stabilityai/japanese-instructblip-alpha" class="text-blue-600">Japanese InstructBLIP Alpha</a>†</td>
+                <td>7B</td>
+                <td>14.0</td>
+                <td>20.8</td>
+                <td>2.42</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><a href="https://huggingface.co/stabilityai/japanese-stable-vlm" class="text-blue-600">Japanese Stable VLM</a>†</td>
+                <td>7B</td>
+                <td>24.2</td>
+                <td>23.3</td>
+                <td>2.47</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><a href="https://huggingface.co/cyberagent/llava-calm2-siglip" class="text-blue-600">LLaVA-CALM2-SigLIP</a>†</td>
+                <td>7B</td>
+                <td>43.3</td>
+                <td>47.2</td>
+                <td>3.15</td>
+                <td>17.4</td>
+                <td>3.21</td>
+            </tr>
+            <tr>
+                <td><a href="https://huggingface.co/SakanaAI/Llama-3-EvoVLM-JP-v2" class="text-blue-600">Llama-3-EvoVLM-JP-v2</a></td>
+                <td>8B</td>
+                <td>39.3</td>
+                <td>41.4</td>
+                <td>2.92</td>
+                <td>23.5</td>
+                <td>2.96</td>
+            </tr>
+            <tr>
+                <td><a href="https://huggingface.co/llm-jp/llm-jp-3-vila-14b" class="text-blue-600">VILA-jp</a></td>
+                <td>13B</td>
+                <td><b>57.2</b></td>
+                <td><b>52.3</b></td>
+                <td><b>3.69</b></td>
+                <td>16.2</td>
+                <td>3.62</td>
+            </tr>
+            <tr class="table-yellow-row">
+                <td>Asagi-2B†</td>
+                <td>1.8B</td>
+                <td>44.7</td>
+                <td>48.8</td>
+                <td>3.26</td>
+                <td>53.7</td>
+                <td>3.69</td>
+            </tr>
+            <tr class="table-yellow-row">
+                <td>Asagi-4B†</td>
+                <td>3.7B</td>
+                <td>49.3</td>
+                <td>49.6</td>
+                <td>3.38</td>
+                <td>55.6</td>
+                <td>3.78</td>
+            </tr>
+            <tr class="table-yellow-row">
+                <td>Asagi-8B†</td>
+                <td>7.2B</td>
+                <td>54.7</td>
+                <td>49.4</td>
+                <td><u>3.45</u></td>
+                <td>56.43</td>
+                <td><u><b>3.84</b></u></td>
+            </tr>
+            <tr class="table-yellow-row">
+                <td>Asagi-14B†</td>
+                <td>13B</td>
+                <td><u>55.8</u></td>
+                <td><u>50.8</u></td>
+                <td>3.44</td>
+                <td><u><b>56.8</b></u></td>
+                <td><u><b>3.84</b></u></td>
+            </tr>
+            <tr>
+                <td>GPT-4o</td>
+                <td>-</td>
+                <td>87.6</td>
+                <td>37.6</td>
+                <td>3.85</td>
+                <td>12.1</td>
+                <td>3.58</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Conclusion Section -->
+<section>
+    <h2 class="text-2xl font-semibold mt-12">終わりに</h2>
+    <p class="mt-4 text-gray-700">
+        本研究では，合成データセットを活用して，日本語VLMの構築を行いました．
+        <br>
+        日本語VLMとしては，過去最大級のデータセットを用いて学習を行っているため，多様な指示や質問に対応可能なモデルに仕上がっています．
+        <br>
+        また，ユーザーの使いやすさを考慮し，2Bから14Bまでのパラメータサイズのモデルを提供しています．
+        <br>
+        ぜひ，モデルをダウンロードして，Asagiモデルの性能を体験してみてください！
+
+    </p>
+</section>
+
+
+<!-- Paper Citation Section -->
+<section>
+    <h2 class="text-2xl font-semibold mt-4">論文情報</h2>
+    <pre class="bg-gray-200 p-4 rounded-lg relative mt-4 whitespace-pre-wrap w-2/3">
+        <code id="bibtex">
+@inproceedings{asagi2024,
+  author    = {上原康平 and 黒瀬優介 and 安道健一郎 and Chen Jiali and Gao Fan and 金澤爽太郎 and 坂本拓彌 and 竹田悠哉 and Yang Boming and Zhao Xinjie and 村尾晃平 and 吉田浩 and 田村孝之 and 合田憲人 and 喜連川優 and 原田達也},
+  title     = {Asagi: 合成データセットを活用した大規模日本語VLM},
+  booktitle = {言語処理学会第31回年次大会},
+  year      = {2024}
+}</code><button onclick="copyBibTeX()" class="absolute top-2 right-2 bg-gray-500 text-white px-3 py-1 rounded text-sm">copy</button></pre>
+</section>
+
+<script>
+    function copyBibTeX() {
+        const button = document.querySelector("button[onclick='copyBibTeX()']");
+        const bibtex = document.getElementById("bibtex").innerText;
+        navigator.clipboard.writeText(bibtex).then(() => {
+            button.textContent = "copied!";
+            setTimeout(() => {
+                button.textContent = "copy";
+            }, 10000);
+        }).catch(err => {
+            console.error("Failed to copy: ", err);
+        });
+    }
+</script>
+
+<footer class="mt-12 p-6 border-t text-gray-700" id="references">
+    <h2 class="text-xl font-semibold">参考文献</h2>
+    <ul class="list-decimal list-inside mt-4">
+        <li id="ref1">Liu, Haotian, et al. "Visual instruction tuning." In NeurIPS, 2023.</li>
+        <li id="ref2">Zhai, Xiaohua, et al. "Sigmoid loss for language image pre-training." In ICCV, 2023.</li>
+        <li id="ref3"><a href="https://huggingface.co/collections/llm-jp/llm-jp-3-fine-tuned-models-672c621db852a01eae939731" class="text-blue-600">LLM-jp-3 Fine-tuned Models</a></li>
+    </ul>
+</footer>
+
+</body>
+</html>
