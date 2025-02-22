@@ -52,6 +52,20 @@
             color: #000;
             font-size: 0.9rem;
         }
+        @media (max-width: 640px) {
+            .carousel .chat-bubble {
+                font-size: 0.5rem;
+            }
+            .carousel .chat-header {
+                font-size: 0.5rem;
+            }
+            .carousel .avatar {
+                font-size: 0.5rem;
+            }
+            .carousel .chat-image {
+                max-height: 100px;
+            }
+        }
     </style>
 </head>
 <body class="container mx-auto pt-12 pb-12 px-6 md:px-16 lg:px-32 space-y-8 bg-base-200 leading-relaxed" data-theme="light">
@@ -165,7 +179,7 @@
 <section>
     <h2 class="text-2xl font-semibold mb-8 mt-12">モデルの出力例（Asagi-14B）</h2>
     <div class="carousel carousel-center rounded-box max-w-full sm:max-w-3xl mx-auto space-x-6 sm:space-x-20 pt-8 pb-8 px-6 sm:px-20 bg-gray-200 overflow-x-auto">
-        <div class="carousel-item max-w-lg h-auto">
+        <div class="carousel-item w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white h-auto">
                 <div class="chat chat-start">
                     <div class="chat-image avatar">
@@ -190,7 +204,7 @@
                 </div>
             </div>
         </div>
-        <div class="carousel-item max-w-lg">
+        <div class="carousel-item w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
                 <div class="chat chat-start">
                     <div class="chat-image avatar">
@@ -215,7 +229,7 @@
                 </div>
             </div>
         </div>
-        <div class="carousel-item max-w-lg">
+        <div class="carousel-item w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
                 <div class="chat chat-start">
                     <div class="chat-image avatar">
@@ -240,7 +254,7 @@
                 </div>
             </div>
         </div>
-        <div class="carousel-item max-w-lg">
+        <div class="carousel-item w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
                 <div class="chat chat-start">
                     <div class="chat-image avatar">
@@ -265,7 +279,7 @@
                 </div>
             </div>
         </div>
-        <div class="carousel-item max-w-lg">
+        <div class="carousel-item w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
                 <div class="chat chat-start">
                     <div class="chat-image avatar">
@@ -290,7 +304,7 @@
                 </div>
             </div>
         </div>
-        <div class="carousel-item max-w-lg">
+        <div class="carousel-item w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div class="card flex flex-col space-y-4 p-6 border rounded-lg w-full max-w-lg mx-auto bg-white">
                 <div class="chat chat-start">
                     <div class="chat-image avatar">
