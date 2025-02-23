@@ -11,6 +11,9 @@
         html {
             background-color: #f2f2f2 !important;
         }
+        .top-hero {
+            margin-top: 0 !important;
+        }
         .table th {
             background-color: #4A90E2 !important;
             color: white;
@@ -82,8 +85,13 @@
 </head>
 <body class="container mx-auto pt-12 pb-12 px-6 md:px-16 lg:px-32 space-y-8 bg-base-200 leading-relaxed" data-theme="light">
 
+<!-- Personal Page Link -->
+<section class="py-1">
+    <a href="https://uehara-mech.github.io/" class="text-md"><i class="fa-solid fa-house mr-2"></i>HomePage</a>
+</section>
+
 <!-- Hero Section -->
-<section class="text-center py-12">
+<section class="text-center py-4 top-hero">
     <h1 class="text-4xl font-bold">Asagi: 合成データセットを活用した大規模日本語VLM</h1>
     <div class="flex flex-wrap justify-center gap-3 pt-8">
         <a href="https://github.com/mil-tokyo/Megatron-VLM" class="custom-btn" target="_blank" rel="noopener noreferrer">
@@ -119,15 +127,26 @@
 </section>
 <section>
     <h2 class="text-2xl font-semibold mt-12">モデル</h2>
-    <p class="mt-4 text-gray-700">
-        今回リリースするモデルは、LLaVA<sup><a href="#ref1" id="cite1">[1]</a></sup>をベースとしたモデル構成となっています。
-        LLaVAは、画像エンコーダーとLLM、両者を接続する2層の線形層から構成されるモデルです。
-        <br>
-        画像エンコーダーには、Googleが提供するSigLIPモデル<sup><a href="#ref2" id="cite2">[2]</a></sup>を用いています。
-        LLMは、LLM-jpによってリリースされた日本語LLM<sup><a href="#ref3" id="cite3">[3]</a></sup>を使用しています。
+    <div class="flex flex-col md:flex-row items-center md:items-start mt-4">
+        <div class="md:w-1/2 text-gray-700">
+            <p class="mt-4 text-gray-700">
+                今回リリースするモデルは、LLaVA<sup><a href="#ref1" id="cite1">[1]</a></sup>をベースとしたモデル構成となっています。
+                LLaVAは、画像エンコーダーとLLM、両者を接続する2層の線形層から構成されるモデルです。
+                <br>
+                画像エンコーダーには、Googleが提供するSigLIPモデル<sup><a href="#ref2" id="cite2">[2]</a></sup>を用いています。
+                LLMは、LLM-jpによってリリースされた日本語LLM<sup><a href="#ref3" id="cite3">[3]</a></sup>を使用しています。
 
-        <br>
-        LLMのパラメータサイズによって、Asagiモデルにはいくつかのバリエーションがあります。
+                <br>
+                LLMのパラメータサイズによって、Asagiモデルにはいくつかのバリエーションがあります。
+            </p>
+        </div>
+        <!-- Right: Model Architecture Image -->
+        <div class="md:w-1/2 flex justify-center mt-6 md:mt-0">
+            <img src="https://raw.githubusercontent.com/uehara-mech/uehara-mech.github.io/refs/heads/master/images/asagi_architecture_white.png"
+                 alt="Asagi Model Architecture"
+                 class="max-w-sm md:max-w-md rounded-lg shadow-lg">
+        </div>
+    </div>
 
     <div class="w-full flex justify-center overflow-x-auto">
         <table class="table mt-12 w-full overflow-x-auto">
@@ -167,7 +186,6 @@
             </tbody>
         </table>
     </div>
-    </p>
 </section>
 
 <!-- Model training -->
