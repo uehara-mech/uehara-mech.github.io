@@ -28,6 +28,12 @@
 <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css"-->
 <!--        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">-->
     <script src="https://kit.fontawesome.com/9141dacc99.js" crossorigin="anonymous"></script>
+    <style>
+        .teaser-image {
+            border-radius: 5%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
 </head>
 
 <body>
@@ -56,6 +62,26 @@
                 <li>April 2018 - March 2020 : Master’s student, Information Science and Technology, The University of Tokyo. (Advisor: Prof. Tatsuya Harada)</li>
                 <li>April 2014 - March 2018 : Undergraduate student, Mechano-Informatics, The University of Tokyo. (Advisor: Prof. Tatsuya Harada)</li>
             </ul>
+        <hr />
+
+        <h5>Projects</h5>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h6>Asagi - Japanese Vision&Language Model</h6>
+                    <p>Asagi is a Japanese Vision&Language Model.
+                        The architecture of Asagi is based on LLaVA, which consists of a vision encoder, a language decoder, and a 2-layer MLP for projecting visual features into the language feature space.<br>
+                        We used Japanese LLMs as the language decoder, and the vision encoder is based on the SigLIP model.<br>
+                        We synthesized a large-scale Japanese Vision & Language dataset, consisting of approximately 20 million image-text pairs.<br>
+                        The model is publicly available on the <a href="https://huggingface.co/collections/MIL-UT/asagi-vlm-67b973a2b1fbda376b0ccf5d">Hugging Face Model Hub</a>.<br>
+                        Please check the <a href="https://uehara-mech.github.io/asagi-vlm">project page</a> for more details.
+                </div>
+                <div class="col-md-5">
+                    <img src="images/asagi_architecture_white.png" class="img-fluid teaser-image" alt="Asagi" style="max-width: 350px;">
+                </div>
+            </div>
+        </div>
+
         <hr />
         <h5>Publications</h5>
         <h6>Journal and International Conference</h6>
