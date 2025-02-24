@@ -87,7 +87,7 @@
 
 <!-- Personal Page Link -->
 <section class="py-1">
-    <a href="https://uehara-mech.github.io/" class="text-md"><i class="fa-solid fa-house mr-2"></i>HomePage</a>
+    <a href="https://uehara-mech.github.io/" class="text-md"><i class="fa-solid fa-house mr-2"></i>Homepage</a>
 </section>
 
 <!-- Hero Section -->
@@ -114,12 +114,11 @@
     <p class="mt-4 text-gray-700">
         日本語VLMを開発するにあたっての最大の課題は、モデルを学習するための大規模な日本語の画像・テキストペアデータセットが不足しているということでした。
         <br>
-        そこで、本研究では、Webからクロールした画像データなどを活用し、英語のVLMや日本語言語モデルを用いて、日本語のデータセットを新規に合成してモデルの学習に利用しました。
+        そこで、本研究では、Webからクロールした画像データなどを活用し、英語のVLMや日本語大規模言語モデル（LLM）を用いて、日本語のデータセットを新規に合成してモデルの学習に利用しました。
         <br>
-        合成データを活用したVLMの学習は、本研究以前にも行われています。
         本研究のデータ合成戦略の特色は、出力物の利用に制限のあるLLM（GPT-4oなど）を合成プロセスにおいて使用していないという点です。
         <br>
-        結果として、今回構築したAsagiモデルは、高い性能を達成しつつ、従来よりオープンな形で提供することが可能となりました。
+        結果として、今回構築したAsagiモデルは、高い性能を達成しつつ、従来の日本語VLMよりもオープンな形で提供することが可能となりました。
     </p>
     <p class="mt-4 text-gray-700">
     なお、本研究については、3月に開催される<a href="https://www.anlp.jp/nlp2025/" class="text-blue-600" target="_blank" rel="noopener noreferrer">言語処理学会第31回年次大会</a>（NLP2025）にて発表を予定しています（3月11日（火） 13:00-14:30 Q3セッション）。
@@ -133,7 +132,7 @@
                 今回リリースするモデルは、LLaVA<sup><a href="#ref1" id="cite1">[1]</a></sup>をベースとしたモデル構成となっています。
                 LLaVAは、画像エンコーダーとLLM、両者を接続する2層の線形層から構成されるモデルです。
                 <br>
-                画像エンコーダーには、Googleが提供するSigLIPモデル<sup><a href="#ref2" id="cite2">[2]</a></sup>を用いています。
+                画像エンコーダーには、SigLIPモデル<sup><a href="#ref2" id="cite2">[2]</a></sup>を用いています。
                 LLMは、LLM-jpによってリリースされた日本語LLM<sup><a href="#ref3" id="cite3">[3]</a></sup>を使用しています。
 
                 <br>
@@ -160,25 +159,25 @@
             </thead>
             <tbody>
             <tr>
-                <td>Asagi-2b</td>
+                <td><a class="link link-primary" href="https://huggingface.co/MIL-UT/Asagi-2B" target="_blank" rel="noopener noreferrer">Asagi-2B</a></td>
                 <td>2.3B</td>
                 <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384" target="_blank" rel="noopener noreferrer">siglip-so400m-patch14-384</a></td>
                 <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-1.8b-instruct" target="_blank" rel="noopener noreferrer">llm-jp-3-1.8b-instruct</a></td>
             </tr>
             <tr>
-                <td>Asagi-4B</td>
+                <td><a class="link link-primary" href="https://huggingface.co/MIL-UT/Asagi-4B" target="_blank" rel="noopener noreferrer">Asagi-4B</a></td>
                 <td>4.2B</td>
                 <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384" target="_blank" rel="noopener noreferrer">siglip-so400m-patch14-384</a></td>
                 <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-3.7b-instruct" target="_blank" rel="noopener noreferrer">llm-jp-3-3.7b-instruct</a></td>
             </tr>
             <tr>
-                <td>Asagi-8B</td>
+                <td><a class="link link-primary" href="https://huggingface.co/MIL-UT/Asagi-8B" target="_blank" rel="noopener noreferrer">Asagi-8B</a></td>
                 <td>7.8B</td>
                 <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384" target="_blank" rel="noopener noreferrer">siglip-so400m-patch14-384</a></td>
                 <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-7.2b-instruct" target="_blank" rel="noopener noreferrer">llm-jp-3-7.2b-instruct</a></td>
             </tr>
             <tr>
-                <td>Asagi-14B</td>
+                <td><a class="link link-primary" href="https://huggingface.co/MIL-UT/Asagi-14B" target="_blank" rel="noopener noreferrer">Asagi-14B</a></td>
                 <td>14.2B</td>
                 <td><a class="link link-primary" href="https://huggingface.co/google/siglip-so400m-patch14-384" target="_blank" rel="noopener noreferrer">siglip-so400m-patch14-384</a></td>
                 <td><a class="link link-primary" href="https://huggingface.co/llm-jp/llm-jp-3-13b-instruct" target="_blank" rel="noopener noreferrer">llm-jp-3-13b-instruct</a></td>
@@ -496,7 +495,7 @@
         <br>
         日本語VLMとしては、過去最大級のデータセットを用いて学習を行っているため、多様な指示や質問に対応可能なモデルに仕上がっています。
         <br>
-        また、ユーザーの使いやすさを考慮し、2Bから14Bまでのパラメータサイズのモデルを提供しています。
+        また、ユーザーの使いやすさを考慮し、2Bモデルなどの軽量なモデルも提供しています。
         <br>
         ぜひ、モデルをダウンロードして、Asagiモデルの性能を体験してみてください！
 
@@ -513,7 +512,7 @@
   author    = {上原康平 and 黒瀬優介 and 安道健一郎 and Chen Jiali and Gao Fan and 金澤爽太郎 and 坂本拓彌 and 竹田悠哉 and Yang Boming and Zhao Xinjie and 村尾晃平 and 吉田浩 and 田村孝之 and 合田憲人 and 喜連川優 and 原田達也},
   title     = {Asagi: 合成データセットを活用した大規模日本語VLM},
   booktitle = {言語処理学会第31回年次大会},
-  year      = {2024}
+  year      = {2025}
 }</code><button onclick="copyBibTeX()" class="absolute top-2 right-2 bg-gray-500 text-white px-3 py-1 rounded text-sm">copy</button></pre>
 </section>
 
